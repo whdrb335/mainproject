@@ -23,6 +23,7 @@ public class GlobalExceptionAdvice {
         final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
 
         return response;
+        // ㅇ허융엉
     }
 
     @ExceptionHandler
