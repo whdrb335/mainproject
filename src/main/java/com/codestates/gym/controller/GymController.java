@@ -87,20 +87,6 @@ public class GymController {
                 HttpStatus.OK);
     }
 
-
-//    @GetMapping
-//    public ResponseEntity getGyms() {
-//        List<Gym> gyms = gymService.findGyms();
-//
-//        // (7) 매퍼를 이용해서 List<Member>를 MemberResponseDto로 변환
-//        List<GymResponseDto> response =
-//                gyms.stream()
-//                        .map(gym -> mapper.gymToGymResponseDto(gym))
-//                        .collect(Collectors.toList());
-//
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
-
 //
     @DeleteMapping("/{gym_id}")
     public ResponseEntity deleteGym(@PathVariable("gym_id") @Positive long gymId) {
@@ -111,21 +97,3 @@ public class GymController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-
-//    @ExceptionHandler
-//    public ResponseEntity handleException(MethodArgumentNotValidException e) {
-//        final List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
-//
-//        List<ErrorResponse.FieldError> errors =
-//                fieldErrors.stream()
-//                        .map(error -> new ErrorResponse.FieldError(
-//                                error.getField(),
-//                                error.getRejectedValue(),
-//                                error.getDefaultMessage()))
-//                        .collect(Collectors.toList());
-//        return new ResponseEntity<>(new ErrorResponse(errors),HttpStatus.BAD_REQUEST);
-//
-//    }
-
-    // 회원 정보는 구현해야 할 실습이 없습니다!
-
