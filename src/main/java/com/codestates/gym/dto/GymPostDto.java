@@ -2,6 +2,8 @@ package com.codestates.gym.dto;
 
 //import lombok.Getter;
 //
+import com.codestates.common.Auditable;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

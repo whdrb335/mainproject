@@ -1,4 +1,4 @@
-package com.codestates.gym.exception;
+package com.codestates.exception;
 
 import lombok.Getter;
 

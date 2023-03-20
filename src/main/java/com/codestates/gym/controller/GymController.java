@@ -1,5 +1,6 @@
 package com.codestates.gym.controller;
 
+import com.codestates.dto.MultiResponseDto;
 import com.codestates.gym.dto.GymPatchDto;
 import com.codestates.gym.dto.GymPostDto;
 import com.codestates.gym.dto.GymResponseDto;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.awt.print.Pageable;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +30,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/gyms")
-@Component
 public class GymController {
     private final GymService gymService;
     private final GymMapper mapper;
@@ -72,10 +74,17 @@ public class GymController {
 
     //헬스장 목록 조회
     @GetMapping
-    public ResponseEntity getGyms() {
+    public ResponseEntity getGyms(@Positive @RequestParam int page,
+                                  @Positive @RequestParam int size) {
         // (7)
-        List<Gym> response = gymService.findGyms();
-        return new ResponseEntity<>(response, HttpStatus.OK);
+//        List<Gym> response = gymService.findGyms();
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+        Page<Gym> pageGyms = gymService.findGyms(page-1,size);
+        List<Gym> gyms = pageGyms.getContent();
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.gymsToGymResponseDtos(gyms),
+                        pageGyms),
+                HttpStatus.OK);
     }
 
 

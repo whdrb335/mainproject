@@ -4,12 +4,14 @@ import com.codestates.gym.dto.GymPatchDto;
 import com.codestates.gym.dto.GymPostDto;
 import com.codestates.gym.dto.GymResponseDto;
 import com.codestates.gym.entity.Gym;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-18T01:55:18+0900",
+    date = "2023-03-20T11:18:26+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
@@ -86,5 +88,19 @@ public class GymMapperImpl implements GymMapper {
         GymResponseDto gymResponseDto = new GymResponseDto( gymId, gymName, address, phoneNumber, businessHours, latitude, longitude );
 
         return gymResponseDto;
+    }
+
+    @Override
+    public List<GymResponseDto> gymsToGymResponseDtos(List<Gym> gyms) {
+        if ( gyms == null ) {
+            return null;
+        }
+
+        List<GymResponseDto> list = new ArrayList<GymResponseDto>( gyms.size() );
+        for ( Gym gym : gyms ) {
+            list.add( gymToGymResponseDto( gym ) );
+        }
+
+        return list;
     }
 }

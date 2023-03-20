@@ -1,6 +1,7 @@
 package com.codestates.gym.entity;
 
 //import com.codestates.member.Member;
+import com.codestates.common.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor // extends Auditable 해야함
-public class GymReview {
+public class GymReview extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

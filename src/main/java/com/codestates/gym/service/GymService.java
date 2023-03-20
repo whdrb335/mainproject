@@ -1,20 +1,15 @@
 package com.codestates.gym.service;
 
 import com.codestates.gym.entity.Gym;
-import com.codestates.gym.exception.BusinessLoginException;
-import com.codestates.gym.exception.ExceptionCode;
+import com.codestates.exception.BusinessLoginException;
+import com.codestates.exception.ExceptionCode;
 
 import com.codestates.gym.repository.GymRepository;
-import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 
@@ -23,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Component
 @Transactional
 
 public class GymService {
@@ -67,9 +61,9 @@ public class GymService {
     }
 
     // 모든 헬스장 정보 조회
-    public List<Gym> findGyms() {
+    public Page<Gym> findGyms(int page, int size) {
 
-        return (List<Gym>) gymRepository.findAll();
+        return gymRepository.findAll(PageRequest.of(page,size, Sort.by("gymId").descending()));
     }
     // 특정 헬스장 삭제
     public void deleteGym(long gymId){
