@@ -2,12 +2,11 @@ package com.codestates.gym.entity;
 
 
 import com.codestates.common.Auditable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ public class Gym extends Auditable {
     @Id
     @Column(name = "gym_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long gymId;
+    private Long id;
     @Column(length = 100, nullable = false, updatable = false,unique = true) // 헬스장 이름은 unique
     private String gymName;
     @Column(length = 100, nullable = false)
@@ -37,6 +36,16 @@ public class Gym extends Auditable {
         this.gymName = gymName;
     }
 
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "gym", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<GymReview> gymReviews = new ArrayList<>();
+
+    public void setGymReview(GymReview gymReview){
+        this.gymReviews.add(gymReview);
+        if(gymReview.getGym() != this) {
+            gymReview.setGym(this);
+        }
+    }
 
 
 

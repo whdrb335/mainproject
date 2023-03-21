@@ -10,7 +10,7 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Getter
 public class GymPatchDto {
-    private long gymId;
+    private Long id;
     @NotBlank(message = "헬스장 이름을 입력해 주세요")
     private String gymName;
     @NotBlank(message = "주소를 입력해 주세요")
@@ -68,11 +68,11 @@ public class GymPatchDto {
 //        this.longitude = longitude;
 //    }
 
-    public long getGymId() {
-        return gymId;
+    public long getId() {
+        return id;
     }
-    public void setGymId(long gymId) {
-        this.gymId = gymId;
+    public void setId(Long id) {
+        this.id = id;
     }
 //    public void setGymName(String gymName){
 //        this.gymName = gymName;

@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GymResponseDto {
-    private long gymId;
+    private Long id;
     private String gymName;
     private String address;
     private String phoneNumber;

@@ -6,7 +6,6 @@ import com.codestates.gym.dto.GymPostDto;
 import com.codestates.gym.dto.GymResponseDto;
 import com.codestates.gym.entity.Gym;
 import com.codestates.gym.mapper.GymMapper;
-import com.codestates.gym.mapper.GymMapperImpl;
 import com.codestates.gym.repository.GymRepository;
 import com.codestates.gym.service.GymService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +29,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/gyms")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class GymController {
     private final GymService gymService;
     private final GymMapper mapper;
@@ -43,16 +43,17 @@ public class GymController {
     @PostMapping
     public ResponseEntity postGym(@Valid @RequestBody GymPostDto gymPostDto) {
         Gym gym = mapper.gymPostDtoToGym(gymPostDto);
-        gymService.createGym(gym);
-        return new ResponseEntity(HttpStatus.CREATED);
+        Gym createGym = gymService.createGym(gym);
+        GymResponseDto response = mapper.gymToGymResponseDto(createGym);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 
     //     헬스장 정보 수정
     @PatchMapping("/{gym_id}")
-    public ResponseEntity patchGym(@PathVariable("gym_id") @Positive long gymId,
+    public ResponseEntity patchGym(@PathVariable("gym_id") @Positive Long id,
                                    @Valid @RequestBody GymPatchDto gymPatchDto) {
-        gymPatchDto.setGymId(gymId);
+        gymPatchDto.setId(id);
 
         Gym response =
                 gymService.updateGym(mapper.gymPatchDtoToGym(gymPatchDto));

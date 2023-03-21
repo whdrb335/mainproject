@@ -5,6 +5,7 @@ import com.codestates.exception.BusinessLoginException;
 import com.codestates.exception.ExceptionCode;
 
 import com.codestates.gym.repository.GymRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,15 +20,12 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 
 public class GymService {
     @Autowired
     private final GymRepository gymRepository;
 
-    @Autowired
-    public GymService(GymRepository gymRepository) {
-        this.gymRepository = gymRepository;
-    }
 
     public Gym createGym(Gym gym) {
         // 등록된 헬스장인지 검증
@@ -38,7 +36,7 @@ public class GymService {
 
     public Gym updateGym(Gym gym) {
         // 존재하는 헬스장인지 검증
-        Gym findGym = findVerifiedGym(gym.getGymId());
+        Gym findGym = findVerifiedGym(gym.getId());
 
         Optional.ofNullable(gym.getGymName())
                 .ifPresent(gymName -> findGym.setGymName(gymName));
@@ -63,7 +61,7 @@ public class GymService {
     // 모든 헬스장 정보 조회
     public Page<Gym> findGyms(int page, int size) {
 
-        return gymRepository.findAll(PageRequest.of(page,size, Sort.by("gymId").descending()));
+        return gymRepository.findAll(PageRequest.of(page,size, Sort.by("id").descending()));
     }
     // 특정 헬스장 삭제
     public void deleteGym(long gymId){

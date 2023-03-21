@@ -4,6 +4,7 @@ package com.codestates.gym.entity;
 import com.codestates.common.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 //import main012.server.common.Auditable;
 //import main012.server.user.entity.Member;
@@ -21,15 +22,17 @@ public class GymReview extends Auditable {
     @Column(name = "gym_review_id")
     private Long id;
 
-    private long grade;
+    private long gymGrade;
 
-    private String comment;
+    private String gymComment;
 
 //    @ManyToOne
 //    @JoinColumn(name = "member_id")
 //    private Member member;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "gym_id")
-//    private Gym gym;
+
+    @ManyToOne
+    @JoinColumn(name = "gym_id")
+    private Gym gym;
+
+
 }
